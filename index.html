@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço Prado — Clínica de Psicopedagogia</title>
+    
+    <!-- Google Fonts: Quicksand para títulos e Plus Jakarta Sans para leitura -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // PALETA DE CORES PERSONALIZADA
+                        // Altere aqui caso precise ajustar os tons do site
+                        'brand-bg': '#FDFBF7',          // Fundo suave bege/creme
+                        'brand-card': '#FFFFFF',        // Fundo de cartões em branco puro
+                        'brand-text': '#2D3A34',        // Texto principal cinza escuro orgânico
+                        'brand-muted': '#5C6B63',       // Texto secundário legível
+                        'brand-sage': {
+                            DEFAULT: '#7E998A',         // Verde menta suave / destaque principal
+                            dark: '#688273',            // Verde murcho escuro para hover
+                            light: '#EBF0EC',           // Tom claríssimo para fundos leves
+                        },
+                        'brand-lavender': {
+                            DEFAULT: '#B8A3B8',       // Lavanda suave / destaque secundário
+                            dark: '#A18AA1',
+                            light: '#F4EFF4',
+                        },
+                        'brand-dusty': {
+                            DEFAULT: '#90A4AE',         // Azul poeira
+                            light: '#ECEFF1',
+                        }
+                    },
+                    fontFamily: {
+                        'title': ['Quicksand', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'custom': '1.25rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos e Animações Personalizadas */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #2D3A34;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* Efeito Blur no Cabeçalho */
+        .glass-header {
+            background-color: rgba(253, 251, 247, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Classes para animação de aparição ao rolar a página */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Transição suave em botões e links */
+        .btn-transition {
+            transition: all 0.25s ease-in-out;
+        }
+
+        .btn-transition:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(126, 153, 138, 0.35);
+        }
+
+        .btn-transition:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px -4px rgba(126, 153, 138, 0.2);
+        }
+
+        /* Accordion customizado */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+        }
+
+        .accordion-content.open {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* SVG Ícones sem emojis */
+        .icon-shape {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-sage-light selection:text-brand-text">
+
+    <!-- CABEÇALHO FIXO -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-stone-200/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- Logotipo do Espaço Prado -->
+            <a href="#inicio" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-brand-sage/20 flex items-center justify-center group-hover:bg-brand-sage/30 transition-colors">
+                    <svg class="w-6 h-6 text-brand-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-title text-xl font-bold tracking-tight text-brand-text block leading-tight">Espaço Prado</span>
+                    <span class="text-xs text-brand-muted tracking-wider uppercase block font-medium">Psicopedagogia</span>
+                </div>
+            </a>
+
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-brand-text">
+                <a href="#inicio" class="hover:text-brand-sage transition-colors py-2">Início</a>
+                <a href="#sobre" class="hover:text-brand-sage transition-colors py-2">Sobre Nós</a>
+                <a href="#atendimento" class="hover:text-brand-sage transition-colors py-2">Atendimento</a>
+                <a href="#pais" class="hover:text-brand-sage transition-colors py-2">Pais e Responsáveis</a>
+                <a href="#gestao" class="hover:text-brand-sage transition-colors py-2">Gestão</a>
+                <a href="#contato" class="bg-brand-sage text-white px-5 py-2.5 rounded-full font-semibold btn-transition hover:bg-brand-sage-dark">
+                    Agendar Consulta
+                </a>
+            </nav>
+
+            <!-- Botão Menu Mobile -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-brand-text hover:bg-brand-sage-light focus:outline-none" aria-label="Abrir Menu">
+                <svg class="w-6 h-6" id="menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg class="w-6 h-6 hidden" id="menu-icon-close" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu Mobile Expandível -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-bg/95 backdrop-blur-lg border-b border-stone-200 px-6 py-6 space-y-4">
+            <a href="#inicio" class="mobile-link block font-medium text-brand-text hover:text-brand-sage py-2">Início</a>
+            <a href="#sobre" class="mobile-link block font-medium text-brand-text hover:text-brand-sage py-2">Sobre Nós</a>
+            <a href="#atendimento" class="mobile-link block font-medium text-brand-text hover:text-brand-sage py-2">Atendimento</a>
+            <a href="#pais" class="mobile-link block font-medium text-brand-text hover:text-brand-sage py-2">Pais e Responsáveis</a>
+            <a href="#gestao" class="mobile-link block font-medium text-brand-text hover:text-brand-sage py-2">Gestão</a>
+            <a href="#contato" class="mobile-link block text-center bg-brand-sage text-white px-5 py-3 rounded-full font-semibold hover:bg-brand-sage-dark">
+                Agendar Consulta
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+
+        <!-- SEÇÃO PRINCIPAL (HERO) -->
+        <section id="inicio" class="relative min-h-[85vh] flex items-center py-16 md:py-24 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                
+                <div class="space-y-6 text-left reveal">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-brand-sage-light text-brand-sage-dark text-xs font-semibold tracking-wider uppercase">
+                        Acolhimento & Desenvolvimento
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-brand-text leading-tight">
+                        Aprender no seu ritmo, com cuidado e compreensão.
+                    </h1>
+                    <p class="text-lg text-brand-muted font-normal leading-relaxed max-w-xl">
+                        No Espaço Prado, apoiamos crianças, adolescentes e suas famílias na jornada da aprendizagem, identificando potencialidades e superando desafios com sensibilidade e embasamento técnico.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                        <a href="#contato" class="inline-flex justify-center items-center bg-brand-sage text-white px-7 py-3.5 rounded-full font-semibold btn-transition hover:bg-brand-sage-dark text-center">
+                            Agendar Consulta
+                        </a>
+                        <a href="#sobre" class="inline-flex justify-center items-center bg-brand-card text-brand-text border border-stone-200 px-7 py-3.5 rounded-full font-semibold btn-transition hover:bg-stone-50 text-center">
+                            Conheça Nosso Trabalho
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Imagem do Hero / Ilustração Orgânica -->
+                <div class="relative reveal">
+                    <div class="w-full h-80 sm:h-96 md:h-[450px] bg-stone-100 rounded-custom overflow-hidden shadow-lg border border-stone-200/60 relative">
+                        <!-- Imagem Ilustrativa de Acolhimento -->
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1000" alt="Ambiente de aprendizado e apoio educacional" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
+                    
+                    <!-- Card Flutuante de Destaque -->
+                    <div class="absolute -bottom-6 -left-4 sm:left-6 bg-brand-card p-5 rounded-2xl shadow-xl border border-stone-100 hidden sm:flex items-center gap-4 max-w-xs">
+                        <div class="w-12 h-12 rounded-full bg-brand-lavender-light flex items-center justify-center text-brand-lavender-dark shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.684a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-brand-text">Atendimento Individualizado</p>
+                            <p class="text-xs text-brand-muted">Respeitando cada etapa do desenvolvimento.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO SOBRE NÓS -->
+        <section id="sobre" class="py-20 bg-brand-card border-y border-stone-200/50">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-brand-sage text-xs font-semibold tracking-wider uppercase block mb-2">Sobre o Espaço Prado</span>
+                    <h2 class="text-3xl md:text-4xl font-title font-bold text-brand-text">
+                        Um olhar humanizado sobre o aprender
+                    </h2>
+                    <p class="text-brand-muted mt-4 text-base leading-relaxed">
+                        Acreditamos que a aprendizagem ocorre na integração entre aspectos cognitivos, emocionais e sociais. Nosso compromisso é proporcionar um ambiente seguro para o desenvolvimento pleno.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="p-8 rounded-custom bg-brand-bg border border-stone-200/60 reveal">
+                        <div class="w-12 h-12 rounded-xl bg-brand-sage-light flex items-center justify-center text-brand-sage-dark mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-title font-bold text-brand-text mb-3">Avaliação Precisa</h3>
+                        <p class="text-brand-muted text-sm leading-relaxed">
+                            Investigação detalhada das causas das dificuldades de aprendizagem através de instrumentos psicopedagógicos atualizados e escuta qualificada.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-8 rounded-custom bg-brand-bg border border-stone-200/60 reveal">
+                        <div class="w-12 h-12 rounded-xl bg-brand-lavender-light flex items-center justify-center text-brand-lavender-dark mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-title font-bold text-brand-text mb-3">Intervenção Focada</h3>
+                        <p class="text-brand-muted text-sm leading-relaxed">
+                            Elaboração de planos terapêuticos individualizados para fortalecer competências de leitura, escrita, raciocínio lógico e autonomia.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-8 rounded-custom bg-brand-bg border border-stone-200/60 reveal">
+                        <div class="w-12 h-12 rounded-xl bg-brand-dusty-light flex items-center justify-center text-brand-dusty mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-title font-bold text-brand-text mb-3">Integração Multidisciplinar</h3>
+                        <p class="text-brand-muted text-sm leading-relaxed">
+                            Trabalho em rede contínuo com famílias, escolas, psicólogos, neuropediatras e fonoaudiólogos para garantir suporte integral.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO ATENDIMENTO -->
+        <section id="atendimento" class="py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-brand-sage text-xs font-semibold tracking-wider uppercase block mb-2">Especialidades</span>
+                    <h2 class="text-3xl md:text-4xl font-title font-bold text-brand-text">
+                        Áreas de Atuação Clínica
+                    </h2>
+                    <p class="text-brand-muted mt-4 text-base">
+                        Oferecemos acompanhamento especializado para diversas necessidades do processo de aprendizagem.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div class="bg-brand-card p-6 rounded-2xl border border-stone-200/60 shadow-sm reveal">
+                        <div class="w-10 h-10 rounded-lg bg-brand-sage-light flex items-center justify-center text-brand-sage font-bold mb-4">01</div>
+                        <h4 class="font-title font-bold text-lg text-brand-text mb-2">Dificuldades de Aprendizagem</h4>
+                        <p class="text-brand-muted text-xs leading-relaxed">Suporte para defasagens escolares pontuais, organização de estudos e métodos de memorização.</p>
+                    </div>
+
+                    <div class="bg-brand-card p-6 rounded-2xl border border-stone-200/60 shadow-sm reveal">
+                        <div class="w-10 h-10 rounded-lg bg-brand-lavender-light flex items-center justify-center text-brand-lavender-dark font-bold mb-4">02</div>
+                        <h4 class="font-title font-bold text-lg text-brand-text mb-2">Transtornos do Desenvolvimento</h4>
+                        <p class="text-brand-muted text-xs leading-relaxed">Intervenção adaptada para TDAH, Dislexia, Discalculia, Disgrafia e Transtorno do Espectro Autista (TEA).</p>
+                    </div>
+
+                    <div class="bg-brand-card p-6 rounded-2xl border border-stone-200/60 shadow-sm reveal">
+                        <div class="w-10 h-10 rounded-lg bg-brand-dusty-light flex items-center justify-center text-brand-dusty font-bold mb-4">03</div>
+                        <h4 class="font-title font-bold text-lg text-brand-text mb-2">Desenvolvimento das Funções Executivas</h4>
+                        <p class="text-brand-muted text-xs leading-relaxed">Estimulação da atenção, memória de trabalho, controle inibitório e planejamento de tarefas.</p>
+                    </div>
+
+                    <div class="bg-brand-card p-6 rounded-2xl border border-stone-200/60 shadow-sm reveal">
+                        <div class="w-10 h-10 rounded-lg bg-stone-100 flex items-center justify-center text-brand-muted font-bold mb-4">04</div>
+                        <h4 class="font-title font-bold text-lg text-brand-text mb-2">Orientação Vocacional e de Estudos</h4>
+                        <p class="text-brand-muted text-xs leading-relaxed">Apoio para adolescentes na construção de rotinas autônomas de aprendizado e tomadas de decisão.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO PAIS E RESPONSÁVEIS -->
+        <section id="pais" class="py-20 bg-brand-sage-light/40 border-y border-stone-200/50">
+            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="reveal">
+                    <span class="text-brand-sage-dark text-xs font-semibold tracking-wider uppercase block mb-2">Parceria Familiar</span>
+                    <h2 class="text-3xl md:text-4xl font-title font-bold text-brand-text mb-6">
+                        Orientação e acolhimento para Pais e Responsáveis
+                    </h2>
+                    <p class="text-brand-muted text-base leading-relaxed mb-6">
+                        Sabemos que as dificuldades na escola podem gerar ansiedade e insegurança no ambiente familiar. No Espaço Prado, os pais encontram um canal aberto de escuta, orientação clara e estratégias práticas para o dia a dia em casa.
+                    </p>
+
+                    <!-- Lista de suporte -->
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand-sage text-white flex items-center justify-center text-xs shrink-0 mt-1">✓</div>
+                            <p class="text-sm text-brand-text">Sessões periódicas de orientação parental para alinhamento do progresso.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand-sage text-white flex items-center justify-center text-xs shrink-0 mt-1">✓</div>
+                            <p class="text-sm text-brand-text">Instruções para criação de rotinas de estudo saudáveis e sem conflitos.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand-sage text-white flex items-center justify-center text-xs shrink-0 mt-1">✓</div>
+                            <p class="text-sm text-brand-text">Compreensão aprofundada dos laudos e relatórios de avaliação.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Interativo de Perguntas Frequentes dos Pais -->
+                <div class="bg-brand-card p-8 rounded-custom border border-stone-200/80 shadow-sm reveal">
+                    <h3 class="font-title font-bold text-xl text-brand-text mb-6">Dúvidas Frequentes da Família</h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Pergunta 1 -->
+                        <div class="border-b border-stone-100 pb-4">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left font-title font-semibold text-brand-text py-2">
+                                <span>Quando procurar um psicopedagogo?</span>
+                                <span class="accordion-icon text-brand-sage text-lg font-bold">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="text-xs text-brand-muted pt-2 leading-relaxed">
+                                    É recomendável buscar atendimento quando notar desinteresse frequente pela escola, dificuldades persistentes em ler ou calcular, desorganização excessiva com materiais ou alteração no comportamento associada ao momento dos estudos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 2 -->
+                        <div class="border-b border-stone-100 pb-4">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left font-title font-semibold text-brand-text py-2">
+                                <span>Qual a duração do processo de avaliação?</span>
+                                <span class="accordion-icon text-brand-sage text-lg font-bold">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="text-xs text-brand-muted pt-2 leading-relaxed">
+                                    Em média, o processo de avaliação psicopedagógica dura entre 6 a 10 sessões, nas quais são aplicados testes específicos, anamnese familiar e contato com a instituição de ensino do paciente.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 3 -->
+                        <div>
+                            <button class="accordion-btn w-full flex justify-between items-center text-left font-title font-semibold text-brand-text py-2">
+                                <span>A clínica faz visitas à escola do meu filho?</span>
+                                <span class="accordion-icon text-brand-sage text-lg font-bold">+</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p class="text-xs text-brand-muted pt-2 leading-relaxed">
+                                    Sim, a articulação com a escola é uma etapa fundamental de nosso trabalho. Realizamos reuniões presenciais ou remotas com a equipe pedagógica para alinhar adaptações e estratégias comuns.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO GESTÃO E PARCERIA ESCOLAR -->
+        <section id="gestao" class="py-20 bg-brand-card">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    
+                    <div class="order-2 md:order-1 reveal">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-6 rounded-2xl bg-brand-bg border border-stone-200/60">
+                                <h4 class="font-title font-bold text-2xl text-brand-sage mb-2">Relatórios</h4>
+                                <p class="text-xs text-brand-muted">Documentação clara e técnica para embasamento de adaptações curriculares.</p>
+                            </div>
+                            <div class="p-6 rounded-2xl bg-brand-bg border border-stone-200/60">
+                                <h4 class="font-title font-bold text-2xl text-brand-lavender-dark mb-2">Reuniões</h4>
+                                <p class="text-xs text-brand-muted">Diálogo constante com coordenações e professores orientadores.</p>
+                            </div>
+                            <div class="p-6 rounded-2xl bg-brand-bg border border-stone-200/60 col-span-2">
+                                <h4 class="font-title font-bold text-xl text-brand-text mb-2">Psicopedagogia Institucional</h4>
+                                <p class="text-xs text-brand-muted">Consultoria para escolas na mediação de casos complexos e capacitação de equipes sobre neurodiversidade no contexto escolar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-1 md:order-2 reveal">
+                        <span class="text-brand-sage text-xs font-semibold tracking-wider uppercase block mb-2">Parceria Institucional</span>
+                        <h2 class="text-3xl md:text-4xl font-title font-bold text-brand-text mb-6">
+                            Gestão Escolar e Apoio Pedagógico
+                        </h2>
+                        <p class="text-brand-muted text-base leading-relaxed mb-6">
+                            Trabalhamos lado a lado com gestores, coordenadores e professores. Nosso objetivo é construir pontes que facilitem a inclusão escolar efetiva, garantindo que as orientações do consultório sejam aplicadas com viabilidade na sala de aula.
+                        </p>
+                        <a href="#contato" class="inline-flex items-center gap-2 text-brand-sage-dark font-semibold hover:underline">
+                            <span>Solicitar contato para parcerias institucionais</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO CONTATO -->
+        <section id="contato" class="py-20 bg-brand-bg border-t border-stone-200/50">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-brand-sage text-xs font-semibold tracking-wider uppercase block mb-2">Fale Conosco</span>
+                    <h2 class="text-3xl md:text-4xl font-title font-bold text-brand-text">
+                        Agende uma Consulta ou Visita
+                    </h2>
+                    <p class="text-brand-muted mt-4 text-base">
+                        Estamos à disposição para tirar dúvidas e agendar a primeira sessão de acolhimento.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-12">
+                    
+                    <!-- Informações de Contato -->
+                    <div class="space-y-8 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brand-sage-light flex items-center justify-center text-brand-sage shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-title font-bold text-brand-text text-base">Endereço</h4>
+                                <p class="text-sm text-brand-muted">Rua Exemplo do Prado, 100 — Sala 42<br>Bairro Edifício Central, Cidade - SP</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brand-lavender-light flex items-center justify-center text-brand-lavender-dark shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h32a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l9 6 9-6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-title font-bold text-brand-text text-base">E-mail</h4>
+                                <p class="text-sm text-brand-muted">contato@espacoprado.com.br</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brand-dusty-light flex items-center justify-center text-brand-dusty shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-title font-bold text-brand-text text-base">Telefone & WhatsApp</h4>
+                                <p class="text-sm text-brand-muted">(11) 99999-8888</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="https://wa.me/5511999998888" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold btn-transition hover:bg-emerald-700">
+                                <span>Atendimento via WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Formulário de Contato -->
+                    <div class="lg:col-span-2 bg-brand-card p-8 rounded-custom border border-stone-200/80 shadow-sm reveal">
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-brand-muted mb-2">Nome Completo</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-stone-200 focus:outline-none focus:border-brand-sage text-brand-text transition-colors" placeholder="Seu nome">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-brand-muted mb-2">Telefone para Contato</label>
+                                    <input type="tel" required class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-stone-200 focus:outline-none focus:border-brand-sage text-brand-text transition-colors" placeholder="(00) 00000-0000">
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-brand-muted mb-2">E-mail</label>
+                                    <input type="email" required class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-stone-200 focus:outline-none focus:border-brand-sage text-brand-text transition-colors" placeholder="seu@email.com">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-brand-muted mb-2">Interesse Principal</label>
+                                    <select class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-stone-200 focus:outline-none focus:border-brand-sage text-brand-text transition-colors">
+                                        <option>Avaliação Psicopedagógica</option>
+                                        <option>Intervenção / Acompanhamento</option>
+                                        <option>Orientação para Pais</option>
+                                        <option>Parceria Escolar / Gestão</option>
+                                        <option>Outros Assuntos</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-brand-muted mb-2">Mensagem</label>
+                                <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-stone-200 focus:outline-none focus:border-brand-sage text-brand-text transition-colors" placeholder="Conte-nos um pouco sobre a sua necessidade..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-brand-sage text-white px-8 py-3.5 rounded-full font-semibold btn-transition hover:bg-brand-sage-dark">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+
+                        <!-- Mensagem de Sucesso (Oculta por padrão) -->
+                        <div id="form-success" class="hidden mt-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm text-center">
+                            Mensagem enviada com sucesso. Entraremos em contato em breve.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-brand-card border-t border-stone-200/60 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            
+            <div>
+                <span class="font-title font-bold text-lg text-brand-text block">Espaço Prado</span>
+                <p class="text-xs text-brand-muted mt-1">Clínica de Psicopedagogia. Todos os direitos reservados.</p>
+            </div>
+
+            <div class="flex gap-6 text-xs text-brand-muted">
+                <a href="#inicio" class="hover:text-brand-sage transition-colors">Início</a>
+                <a href="#sobre" class="hover:text-brand-sage transition-colors">Sobre</a>
+                <a href="#pais" class="hover:text-brand-sage transition-colors">Pais e Responsáveis</a>
+                <a href="#gestao" class="hover:text-brand-sage transition-colors">Gestão</a>
+                <a href="#contato" class="hover:text-brand-sage transition-colors">Contato</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT — INTERAÇÕES E ANIMAÇÕES -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // 1. Menu Mobile Toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.contains('hidden');
+                if (isOpen) {
+                    mobileMenu.classList.remove('hidden');
+                    iconOpen.classList.add('hidden');
+                    iconClose.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                }
+            }
+
+            if (menuBtn) {
+                menuBtn.addEventListener('click', toggleMenu);
+            }
+
+            // Fechar menu mobile ao clicar em um link
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // 2. Accordion para Seção de Pais
+            const accordionBtns = document.querySelectorAll('.accordion-btn');
+
+            accordionBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.accordion-icon');
+                    
+                    const isOpen = content.classList.contains('open');
+
+                    // Fechar outros accordions
+                    document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+                    document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
+
+                    if (!isOpen) {
+                        content.classList.add('open');
+                        icon.textContent = '-';
+                    }
+                });
+            });
+
+            // 3. Animações Reveal ao rolar a página (IntersectionObserver)
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(el => observer.observe(el));
+
+            // 4. Envio do Formulário de Contato
+            const contactForm = document.getElementById('contact-form');
+            const formSuccess = document.getElementById('form-success');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    
+                    // Simulação de envio
+                    contactForm.reset();
+                    formSuccess.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        formSuccess.classList.add('hidden');
+                    }, 5000);
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
